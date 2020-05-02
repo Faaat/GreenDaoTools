@@ -1,0 +1,41 @@
+apply plugin: 'java-library'
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        //5.0.0 需要gradle 5.0+ 才可构建
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.0'
+    }
+}
+
+shadowJar {
+    baseName = 'apt-complire'
+    classifier = null
+    version = 'V1.0'
+    dependencies {
+        //需要依赖的第三方lib
+        include(dependency('com.squareup:javapoet:1.10.0'))
+        //多个
+        include(dependency('com.google.auto.service:auto-service:1.0-rc6'))
+        include(dependency('com.google.auto.service:auto-service:1.0-rc6'))
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.squareup:javapoet:1.10.0'
+    //google的 auto service库,自动生成service,省去了手动配置resources/META-INF/services
+    implementation 'com.google.auto.service:auto-service:1.0-rc6'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
+    //依赖注解项目,因为要在这里读取注解
+    implementation project(path: ':annotation')
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

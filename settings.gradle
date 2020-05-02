@@ -1,0 +1,4 @@
+include ':app'
+include ':apt'
+rootProject.name='TestApplication'
+include ':annotation'
